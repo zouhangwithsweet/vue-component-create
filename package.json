@@ -2,8 +2,10 @@
   "name": "vue-create-component",
   "version": "0.0.1",
   "description": "create api component, inspired by vue-create-api",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib-module/index.js",
   "scripts": {
+    "build": "rollup -c",
     "cz": "npx git-cz",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,8 +27,13 @@
     "vue": "^3.0.0-beta.18"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^8.1.0",
     "cz-conventional-changelog": "3.2.0",
     "rollup": "^2.20.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "typescript": "^3.9.6",
     "vue": "^3.0.0-beta.18"
   },
   "config": {
