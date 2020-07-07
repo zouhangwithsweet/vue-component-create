@@ -25,7 +25,7 @@ export const useCreate = function(Component: ComponentOptions, app?: App, option
     }
   }
   if (app) {
-    // app.config.globalProperties[`$create${Component.name}`] = useCreate
+    app.config.globalProperties[`$create${Component.name}`] = useCreate(Component, app)
   }
   return _instance.component.ctx
 }
