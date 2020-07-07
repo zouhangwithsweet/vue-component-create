@@ -1,0 +1,36 @@
+{
+  "name": "vue-create-component",
+  "version": "0.0.1",
+  "description": "create api component, inspired by vue-create-api",
+  "main": "index.js",
+  "scripts": {
+    "cz": "npx git-cz",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zouhangwithsweet/vue-create-component.git"
+  },
+  "keywords": [
+    "vue3"
+  ],
+  "author": "zouhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zouhangwithsweet/vue-create-component/issues"
+  },
+  "homepage": "https://github.com/zouhangwithsweet/vue-create-component#readme",
+  "dependencies": {},
+  "peerDependencies": {
+    "vue": "^3.0.0-beta.18"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "3.2.0",
+    "vue": "^3.0.0-beta.18"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
