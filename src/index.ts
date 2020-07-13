@@ -3,7 +3,7 @@ import { App, createVNode, render, mergeProps, ComponentOptions } from 'vue'
 let _instance: any = null
 let _flag = false
 
-export const useCreate = function(Component: ComponentOptions, app?: App, options?: any, ) {
+const createComponet = (Component: ComponentOptions, options?: any) => {
   if (!_instance) {
     const container = document.createDocumentFragment()
 
@@ -25,12 +25,22 @@ export const useCreate = function(Component: ComponentOptions, app?: App, option
       })
     }
   }
+
+  return _instance.component.ctx
+}
+
+export const useCreate = function(Component: ComponentOptions, app: App, options?: any, ) {
   if (app) {
     if (_flag) return
     _flag = true
-    app.config.globalProperties[`$create${Component.name}`] = _instance.component.ctx
+    app.config.globalProperties[`$create${Component.name}`] = function() {
+      if (_instance) {
+        return _instance.component.ctx
+      } else {
+        return createComponet(Component, options)
+      }
+    }
   }
-  return _instance.component.ctx
 }
 
 const install = (app: App) => {

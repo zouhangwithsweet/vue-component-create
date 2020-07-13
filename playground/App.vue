@@ -18,8 +18,8 @@ export default defineComponent({
   methods: {
     show() {
       console.log(this)
-      const loading = (this as any).$createLoading
-
+      const loading = (this as any).$createLoading()
+      console.log(loading)
       loading.show()
 
       setTimeout(() => {
@@ -29,7 +29,7 @@ export default defineComponent({
       }, 1000)
 
       setTimeout(() => {
-        loading.hide()
+        loading.remove()
       }, 5000)
     }
   }
