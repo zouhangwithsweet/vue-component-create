@@ -1,6 +1,7 @@
 import { App, createVNode, render, mergeProps, ComponentOptions } from 'vue'
 
 let _instance: any = null
+let _flag = false
 
 export const useCreate = function(Component: ComponentOptions, app?: App, options?: any, ) {
   if (!_instance) {
@@ -25,7 +26,9 @@ export const useCreate = function(Component: ComponentOptions, app?: App, option
     }
   }
   if (app) {
-    app.config.globalProperties[`$create${Component.name}`] = useCreate(Component, app)
+    if (_flag) return
+    _flag = true
+    app.config.globalProperties[`$create${Component.name}`] = _instance.component.ctx
   }
   return _instance.component.ctx
 }

@@ -6,4 +6,4 @@ import Loading from './Loading.vue'
 const app = createApp(App)
 
 app.mount('#app')
-app.config.globalProperties.$loading = useCreate(Loading)
+useCreate(Loading, app)

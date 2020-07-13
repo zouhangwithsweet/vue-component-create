@@ -17,7 +17,8 @@ export default defineComponent({
   },
   methods: {
     show() {
-      const loading = (this as any).$loading
+      console.log(this)
+      const loading = (this as any).$createLoading
 
       loading.show()
 
