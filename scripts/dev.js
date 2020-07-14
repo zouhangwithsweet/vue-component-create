@@ -3,8 +3,9 @@ const child = require('child_process')
 const path = require('path')
 let dev = false
 
-!dev && child.exec('vite serve playground', function(err){
+!dev && child.exec('vite serve playground', function(err, sto){
   if (!err) dev = true
+  console.log(sto)
 })
 
 fs.watch(path.resolve(__dirname, '../src/index.ts'), function(event, fileName) {

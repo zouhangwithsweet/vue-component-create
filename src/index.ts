@@ -1,4 +1,5 @@
 import { App, createVNode, render, mergeProps, ComponentOptions } from 'vue'
+import { camelize } from './utils'
 
 let _instance: any = null
 let _flag = false
@@ -30,16 +31,21 @@ const createComponet = (Component: ComponentOptions, options?: any) => {
 }
 
 export const useCreate = function(Component: ComponentOptions, app: App, options?: any, ) {
+  if (!Component.name) {
+    throw new Error('The name of the component is necessary')
+  }
   if (app) {
     if (_flag) return
     _flag = true
-    app.config.globalProperties[`$create${Component.name}`] = function() {
-      if (_instance) {
-        return _instance.component.ctx
-      } else {
-        return createComponet(Component, options)
+    app
+      .config
+      .globalProperties[`${camelize(`$create-${camelize(Component.name)}`)}`] = function() {
+        if (_instance) {
+          return _instance.component.ctx
+        } else {
+          return createComponet(Component, options)
+        }
       }
-    }
   }
 }
 

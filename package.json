@@ -23,7 +23,9 @@
     "url": "https://github.com/zouhangwithsweet/vue-create-component/issues"
   },
   "homepage": "https://github.com/zouhangwithsweet/vue-create-component#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@vue/shared": "^3.0.0-beta.20"
+  },
   "peerDependencies": {
     "vue": "^3.0.0-beta.18"
   },
