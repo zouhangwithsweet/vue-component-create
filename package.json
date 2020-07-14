@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "module": "lib-module/index.js",
   "scripts": {
-    "dev": "node scripts/dev.js",
-    "build": "rollup -c && node vite.config.js",
+    "dev": "vite serve",
+    "build": "rollup -c",
     "cz": "npx git-cz",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

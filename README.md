@@ -6,4 +6,5 @@
 
 ```sh
 yarn run dev
+# view on http://localhost:port/playground/
 ```

@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { useCreate } from '../lib-module/index.js'
+import { useCreate } from '../src/index'
 import App from './App.vue'
 import Loading from './Loading.vue'
 
