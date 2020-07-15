@@ -4,11 +4,17 @@
 
 ### API
 
-`API` 参考 `vue-create-api` 如下  
-- `updateProps` 
-- `remove`
-- `$create[Component.name]` 
+> `API` 主要参考 `vue-create-api` 如下  
+- `updateProps`；更新 `props` 等，`vue3` 推荐 `onXxx` 来监听事件 
+- `remove`；移除组件，卸载 `Dom`
+- `$create[Component.name]` ；挂载在 `this` 上的插件调用方法
 
+### TodoList
+
+- [ ] 生命周期绑定  
+- [ ] `this` 绑定  
+- [ ] `install` 实现  
+- [ ] `provide,inject` 实现  
 
 ### Example
 
