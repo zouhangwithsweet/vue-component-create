@@ -1,10 +1,10 @@
-import { App, createVNode, render, mergeProps, ComponentOptions } from 'vue'
+import { App, createVNode, render, mergeProps, Component } from 'vue'
 import { camelize } from './utils'
 
 let _instance: any = null
 let _flag = false
 
-const createComponet = (Component: ComponentOptions, options?: any) => {
+const createComponet = (Component: Component, options?: any) => {
   if (!_instance) {
     const container = document.createDocumentFragment()
 
@@ -30,7 +30,7 @@ const createComponet = (Component: ComponentOptions, options?: any) => {
   return _instance.component.ctx
 }
 
-export const useCreate = function(Component: ComponentOptions, app: App, options?: any, ) {
+export const useCreate = function(Component: Component, app: App, options?: any,) {
   if (!Component.name) {
     throw new Error('The name of the component is necessary')
   }
@@ -50,6 +50,6 @@ export const useCreate = function(Component: ComponentOptions, app: App, options
 }
 
 const install = (app: App) => {
-  // todo
+  app.config.globalProperties.$useCreate = useCreate
 }
 export default install
