@@ -13,12 +13,12 @@
 
 - [ ] 生命周期绑定  
 - [ ] `this` 绑定  
-- [ ] `install` 实现  
+- [x] `install` 实现  
 - [ ] `provide,inject` 实现  
 
 ### Example
 
 ```sh
 yarn run dev
-# view on http://localhost:port/playground/
+# view on http://localhost:3000/playground/
 ```
