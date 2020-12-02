@@ -1,5 +1,5 @@
 {
-  "name": "vue-create-component",
+  "name": "@zz-hang/vue-create-component",
   "version": "0.0.1",
   "description": "create api component, inspired by vue-create-api",
   "main": "lib/index.js",

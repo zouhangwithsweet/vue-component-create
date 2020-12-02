@@ -35,16 +35,14 @@ export const useCreate = function(Component: Component, app: App, options?: any,
     throw new Error('The name of the component is necessary')
   }
   if (app) {
-    if (_flag) return
-    _flag = true
     app
       .config
       .globalProperties[`${camelize(`$create-${camelize(Component.name)}`)}`] = function() {
-        if (_instance) {
-          return _instance.component.ctx
-        } else {
-          return createComponet(Component, options)
+        if (!_instance) {
+          createComponet(Component, options)
+          _instance.appContext = app._context
         }
+        return _instance.component.ctx
       }
   }
 }

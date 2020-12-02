@@ -11,9 +11,9 @@
 
 ### TodoList
 
-- [ ] 生命周期绑定  
-- [ ] `this` 绑定  
+- [x] `this` 绑定  
 - [x] `install` 实现  
+- [ ] 生命周期绑定  
 - [ ] `provide,inject` 实现  
 
 ### Example
