@@ -23,7 +23,7 @@
   },
   "include": [
     "src"
-  ],
+, "playground/vue-shim.d.ts"  ],
   "exclude": [
     "node_modules",
     "dev_server.js"

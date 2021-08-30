@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "module": "lib-module/index.js",
   "scripts": {
-    "dev": "vite serve",
+    "dev": "vite",
     "build": "rollup -c",
     "cz": "npx git-cz",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,22 +24,24 @@
   },
   "homepage": "https://github.com/zouhangwithsweet/vue-create-component#readme",
   "dependencies": {
-    "@vue/shared": "^3.0.0-beta.20"
+    "@vue/shared": "^3.2.6"
   },
   "peerDependencies": {
-    "vue": "^3.0.0-beta.18"
+    "vue": "^3.2.6"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^8.1.0",
-    "cz-conventional-changelog": "3.2.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "cz-conventional-changelog": "3.3.0",
     "rollup": "^2.20.0",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-terser": "^6.1.0",
-    "rollup-plugin-typescript2": "^0.27.1",
-    "stylus": "^0.54.7",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "stylus": "^0.54.8",
     "typescript": "^3.9.6",
-    "vite": "^1.0.0-beta.11",
-    "vue": "^3.0.0-beta.18"
+    "vite": "^2.5.1",
+    "vue": "^3.2.6"
   },
   "config": {
     "commitizen": {

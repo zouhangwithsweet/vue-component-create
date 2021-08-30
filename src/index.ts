@@ -1,33 +1,82 @@
-import { App, createVNode, render, mergeProps, Component } from 'vue'
+import { App, render, mergeProps, createVNode } from 'vue'
 import { camelize } from './utils'
+import type { Component, VNode } from 'vue'
 
-let _instance: any = null
-let _flag = false
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    remove?: (callback?: (args?: any) => void) => void
+    updateProps?: (args: Record<string, any>) => void
+  }
+}
 
-const createComponet = (Component: Component, options?: any) => {
-  if (!_instance) {
-    const container = document.createDocumentFragment()
+let seed = 1
 
-    _instance = createVNode(Component)
+const instances: VNode[] = []
 
-    _instance.props = mergeProps(_instance.props, options)
+export const createComponent = (
+  CompConstructor: Component,
+  options: Record<string, any>
+) => {
+  const container = document.createElement('div')
+  const id = 'create_component_' + seed++
 
-    render(_instance, container)
-    document.body.appendChild(container)
-  
-    _instance.component.ctx.remove = function() {
+  const vm = createVNode(CompConstructor, {
+    ...options,
+    id,
+  })
+
+  vm.props = mergeProps(vm.props || {}, options)
+
+  render(vm, container)
+  instances.push(vm)
+
+  /**
+   * mounted dom
+   */
+  document.body.appendChild(container)
+
+  const _this = vm?.component?.exposed || vm?.component?.proxy
+  if (_this) {
+    /**
+     * remove instnace
+     */
+     ;(_this as any).$remove = (_this as any).remove = function (
+      callback?: (args?: any) => void
+    ) {
       render(null, container)
-      _instance = null
+      document.body.removeChild(container)
+      callback?.()
     }
-  
-    _instance.component.ctx.$updateProps = function(props: any) {
-      props && Object.keys(props).forEach(k => {
-        _instance.component.props[k] = props[k]
-      })
+    /**
+     * update props
+     */
+     ;(_this as any).$updateProps = (_this as any).updateProps = function (
+      props: Record<string, any>
+    ) {
+      props &&
+        Object.keys(props).forEach((k) => {
+          ;(vm as any).component.props[k] = props[k]
+        })
     }
   }
 
-  return _instance.component.ctx
+  return vm
+}
+
+export function destroy(id: string) {
+  const idx = instances.findIndex((vm) => {
+    const { id: _id } = vm?.component?.props as any
+    return id === _id
+  })
+
+  if (idx === -1) {
+    return
+  }
+
+  const _this = instances[idx]?.component?.exposed || instances[idx]?.component?.proxy
+
+  ;(_this as any).remove()
+  instances.splice(idx, 1)
 }
 
 export const useCreate = function(Component: Component, app: App, options?: any,) {
@@ -38,11 +87,8 @@ export const useCreate = function(Component: Component, app: App, options?: any,
     app
       .config
       .globalProperties[`${camelize(`$create-${camelize(Component.name)}`)}`] = function() {
-        if (!_instance) {
-          createComponet(Component, options)
-          _instance.appContext = app._context
-        }
-        return _instance.component.ctx
+        const vm = createComponent(Component, options)
+        return vm.component?.exposed || vm.component?.proxy
       }
   }
 }
@@ -50,4 +96,5 @@ export const useCreate = function(Component: Component, app: App, options?: any,
 const install = (app: App) => {
   app.config.globalProperties.$useCreate = useCreate
 }
+
 export default install

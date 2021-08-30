@@ -1,2 +1,7 @@
-console.log('  > Demo: http://localhost:3000/playground/')
-module.exports = {}
+import vue from '@vitejs/plugin-vue'
+
+export default {
+  plugins: [
+    vue(),
+  ]
+}
