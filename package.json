@@ -40,7 +40,7 @@
     "rollup-plugin-typescript2": "^0.30.0",
     "stylus": "^0.54.8",
     "typescript": "^3.9.6",
-    "vite": "^2.5.1",
+    "vite": "^2.9.13",
     "vue": "^3.2.6"
   },
   "config": {
