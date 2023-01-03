@@ -31,3 +31,7 @@ createAPI(app, Loading, true)
 - [x] `install` 实现  
 - [x] 生命周期绑定  
 - [ ] `provide,inject` 实现
+
+## License
+
+MIT
