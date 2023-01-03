@@ -1,11 +1,13 @@
-# vue-create-component(WIP)
+# vue-component-create(alpha)
+
+[![npm version](https://badge.fury.io/js/vue-component-create.svg)](https://badge.fury.io/js/vue-component-create)
 
 受 `vue-create-api` 启发，基于 `Vue3.0` 的 `create-api`；使用 `Vite` 搭建开发环境
 
 ## Usage
 
 ```typescript
-import { createAPI } from 'vue-create-component'
+import { createAPI } from 'vue-component-create'
 import Loading from 'path/to/Loading.vue'
 
 const app = createApp(App)
