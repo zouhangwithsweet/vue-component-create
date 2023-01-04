@@ -12,9 +12,9 @@ import Loading from 'path/to/Loading.vue'
 
 const app = createApp(App)
 
-app.mount('#app')
-
 createAPI(app, Loading, true)
+
+app.mount('#app')
 ```
 
 ## API
