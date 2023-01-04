@@ -73,7 +73,7 @@ const createComponent = (
         const { id: _id } = item.props as any
         return id === _id
       })
-      instances.splice(idx, 1)
+      ~idx && instances.splice(idx, 1)
     }
 
     // add $updateProps

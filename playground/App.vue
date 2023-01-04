@@ -7,29 +7,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue'
+
 export default defineComponent({
   setup() {
     const isShow = ref(false)
+  
     return {
       isShow,
     }
   },
   methods: {
     show() {
-      const loading = (this as any).$createLoading()
-      console.log(loading)
-      loading.show()
-
+      const spin = this.$createSpin({
+        tip: 'Loading message...',
+        style: "position: fixed; top: 100px; left: 50%; transform: translateX(-50%);"
+      })
+      
       setTimeout(() => {
-        loading.$updateProps({
-          msg: '测试message',
-        })
-      }, 1000)
-
-      setTimeout(() => {
-        loading.$remove()
-      }, 5000)
+        spin.$remove()
+      }, 3500)
     }
   }
 })

@@ -1,12 +1,16 @@
 import { createApp } from 'vue'
-import './style.css'
+import { Spin } from '@arco-design/web-vue'
+import { createAPI } from '../src/index'
+
 import App from './App.vue'
 import Loading from './Loading.vue'
 
-import { createAPI } from '../src/index'
+import '@arco-design/web-vue/dist/arco.css'
+import './style.css'
 
 const app = createApp(App)
 
-app.mount('#app')
-
 createAPI(app, Loading, true)
+createAPI(app, Spin, true)
+
+app.mount('#app')

@@ -2,7 +2,9 @@
   "name": "vue-component-create",
   "version": "0.0.1",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "exports": {
@@ -22,6 +24,7 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
+    "@arco-design/web-vue": "^2.41.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "stylus": "^0.59.0",
     "tsup": "^6.5.0",
