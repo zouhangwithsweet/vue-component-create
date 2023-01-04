@@ -1,11 +1,3 @@
-<template>
-  <h2>Vue create Component</h2>
-  <p>create component with API</p>
-  <p style="padding-bottom: 200px;">
-    <button @click="show">show</button>
-  </p>
-</template>
-
 <script lang="ts">
 import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue'
 
@@ -31,6 +23,14 @@ export default defineComponent({
   }
 })
 </script>
+
+<template>
+  <h2>Vue create Component</h2>
+  <p>create component with API</p>
+  <p style="padding-bottom: 200px;">
+    <button @click="show">show</button>
+  </p>
+</template>
 
 <style scoped>
 h2 {
