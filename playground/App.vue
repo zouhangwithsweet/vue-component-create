@@ -1,5 +1,6 @@
 <script lang="ts">
-import { defineComponent, ref, onMounted, getCurrentInstance } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { IconUser } from '@arco-design/web-vue/es/icon'
 
 export default defineComponent({
   setup() {
@@ -15,9 +16,21 @@ export default defineComponent({
         tip: 'Loading message...',
         style: "position: fixed; top: 100px; left: 50%; transform: translateX(-50%);"
       })
+      const avatar = this.$createAvatar({
+        style: "position: fixed; top: 50px; left: 50%; transform: translateX(-50%);"
+      }, (h) => ({
+        default: () => h(IconUser)
+      }))
+      const rate = this.$createRate({
+        style: "position: fixed; top: 180px; left: 50%; transform: translateX(-50%);",
+        defaultValue: 4,
+        readonly: true
+      })
       
       setTimeout(() => {
         spin.$remove()
+        avatar.$remove()
+        rate.$remove()
       }, 3500)
     }
   }
@@ -27,7 +40,7 @@ export default defineComponent({
 <template>
   <h2>Vue create Component</h2>
   <p>create component with API</p>
-  <p style="padding-bottom: 200px;">
+  <p>
     <button @click="show">show</button>
   </p>
 </template>

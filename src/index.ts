@@ -19,7 +19,7 @@ const createComponent = (
     _instance?: ComponentPublicInstance | null
   },
   options: Record<string, any>,
-  slots: null | ((createVnode: typeof h) => Record<string, VNode>) = null,
+  slots: null | ((createVnode: typeof h) => Record<string, () => VNode>) = null,
   context: null | AppContext = null
 ) => {
   let _options = options
@@ -79,7 +79,7 @@ const createComponent = (
     // add $updateProps
     $cre['$updateProps'] = function (
       props: Record<string, VNode>,
-      slots: null | ((createVnode: typeof h) => Record<string, VNode>)
+      slots: null | ((createVnode: typeof h) => Record<string, () => VNode>)
     ) {
       _options = { ..._options, ...props }
       _slots = slots ? { ...(_slots || {}), ...slots(h) } : null
