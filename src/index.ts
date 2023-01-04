@@ -11,6 +11,8 @@ import {
   App,
 } from 'vue'
 
+export type SlotsData = (createVnode: typeof h) => Record<string, () => VNode>
+
 let seed = 0
 const instances: VNode[] = []
 
@@ -19,7 +21,7 @@ const createComponent = (
     _instance?: ComponentPublicInstance | null
   },
   options: Record<string, any>,
-  slots: null | ((createVnode: typeof h) => Record<string, () => VNode>) = null,
+  slots: null | SlotsData = null,
   context: null | AppContext = null
 ) => {
   let _options = options
@@ -90,7 +92,7 @@ const createComponent = (
   }
 
   return $cre as ComponentPublicInstance<{}, {}, {}, {}, {
-    $updateProps: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, VNode>)) => void
+    $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
     $remove: () => void
   }>
 }
@@ -99,7 +101,7 @@ export function createAPI(
   app: App,
   componentCtor: Component & {
     _instance?: ComponentPublicInstance<{}, {}, {}, {}, {
-      $updateProps: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, VNode>)) => void
+      $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
       $remove: () => void
     }> | null
   },
