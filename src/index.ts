@@ -89,13 +89,19 @@ const createComponent = (
     document.body.appendChild(container)
   }
 
-  return $cre
+  return $cre as ComponentPublicInstance<{}, {}, {}, {}, {
+    $updateProps: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, VNode>)) => void
+    $remove: () => void
+  }>
 }
 
 export function createAPI(
   app: App,
   componentCtor: Component & {
-    _instance?: ComponentPublicInstance<any> | null
+    _instance?: ComponentPublicInstance<{}, {}, {}, {}, {
+      $updateProps: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, VNode>)) => void
+      $remove: () => void
+    }> | null
   },
   single?: boolean
 ) {
