@@ -15,6 +15,10 @@ declare module 'vue' {
     $createSpin: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, () => VNode>)) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler>
     $createAvatar: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, () => VNode>)) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler>
     $createRate: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, () => VNode>)) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler>
+    $createModal: (options?: Record<string, any>, slots?: null | ((createVnode: typeof h) => Record<string, () => VNode>)) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler & {
+      show: () => void
+      hide: () => void
+    }>
   }
 }
 

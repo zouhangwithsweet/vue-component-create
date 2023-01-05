@@ -32,6 +32,10 @@ export default defineComponent({
         avatar.$remove()
         rate.$remove()
       }, 3500)
+    },
+    showModal() {
+      const modal = this.$createModal()
+      modal.show()
     }
   }
 })
@@ -40,8 +44,9 @@ export default defineComponent({
 <template>
   <h2>Vue create Component</h2>
   <p>create component with API</p>
-  <p>
+  <p style="display: flex; gap: 16px; flex-direction: column; align-items: center;">
     <button @click="show">show</button>
+    <button @click="showModal">show Modal</button>
   </p>
 </template>
 
