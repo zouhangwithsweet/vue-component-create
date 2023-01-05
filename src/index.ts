@@ -4,6 +4,7 @@ import {
   mergeProps,
   camelize,
   h,
+  isVNode,
   VNode,
   AppContext,
   Component,
@@ -51,9 +52,7 @@ const createComponent = <P extends Record<string, any> = {}>(
 
   instances.push(vm)
 
-  let $cre:
-    | ComponentPublicInstance<any>
-    | undefined
+  let $cre: ComponentPublicInstance<any> | undefined
 
   if (container) {
     // mounted component
@@ -91,19 +90,31 @@ const createComponent = <P extends Record<string, any> = {}>(
     document.body.appendChild(container)
   }
 
-  return $cre as ComponentPublicInstance<{}, {}, {}, {}, {
-    $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
-    $remove: () => void
-  }>
+  return $cre as ComponentPublicInstance<
+    {},
+    {},
+    {},
+    {},
+    {
+      $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
+      $remove: () => void
+    }
+  >
 }
 
 export function createAPI(
   app: App,
   componentCtor: Component & {
-    _instance?: ComponentPublicInstance<{}, {}, {}, {}, {
-      $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
-      $remove: () => void
-    }> | null
+    _instance?: ComponentPublicInstance<
+      {},
+      {},
+      {},
+      {},
+      {
+        $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
+        $remove: () => void
+      }
+    > | null
   },
   single?: boolean
 ) {
@@ -111,30 +122,33 @@ export function createAPI(
     throw Error('The Component must have a name.')
   }
 
-  app.config.globalProperties[
-    `$create${camelize(componentCtor.name).replace(/^\w/, ($) => $.toUpperCase())}`
-  ] = function <P extends Record<string, any> = {}>(options: P, slots = null) {
-    if (single && componentCtor._instance) {
-      if (options) {
-        componentCtor._instance.$updateProps(options, slots)
+  app.config.globalProperties[`$create${camelize(componentCtor.name).replace(/^\w/, ($) => $.toUpperCase())}`] =
+    function <P extends Record<string, any> = {}>(options: P, slots = null) {
+      if (single && componentCtor._instance) {
+        if (options) {
+          componentCtor._instance.$updateProps(options, slots)
+        }
+        return componentCtor._instance
       }
-      return componentCtor._instance
+      const vm = (componentCtor._instance = createComponent<P>(
+        componentCtor,
+        options,
+        slots,
+        this ? this._.appContext : null
+      ))
+
+      const hasParent = !!this && !!this._ && isVNode(this._.vnode)
+
+      if (hasParent) {
+        const parentVnodeProps = this && this._ && isVNode(this._.vnode) ? this._.vnode.props : null
+
+        this._.vnode.props = mergeProps(parentVnodeProps || {}, {
+          onVnodeBeforeUnmount() {
+            vm.$remove()
+          },
+        })
+      }
+
+      return vm
     }
-    const vm = (componentCtor._instance = createComponent<P>(
-      componentCtor,
-      options,
-      slots,
-      this ? this._.appContext : null
-    ))
-
-    const parentVnodeProps = this ? this._.vnode.props : null
-
-    this._.vnode.props = mergeProps(parentVnodeProps || {}, {
-      onVnodeBeforeUnmount() {
-        vm.$remove()
-      },
-    })
-
-    return vm
-  }
 }
