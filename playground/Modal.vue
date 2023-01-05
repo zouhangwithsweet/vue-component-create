@@ -1,42 +1,46 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { Modal } from '@arco-design/web-vue'
 import { ref } from 'vue'
 
-export default {
-  name: 'Modal',
-  components: {
-    'a-modal': Modal
-  },
-  setup() {
-    const visible = ref(false)
+withDefaults(
+  defineProps<{
+    title?: string | number
+  }>(),
+  {
+    title: 'Modal Title',
+  }
+)
 
-    const show = () => {
-      visible.value = true
-    }
-    const handleOk = () => {
-      console.log('confirm')
-      hide()
-    }
-    const hide = () => {
-      visible.value = false
-    }
+const visible = ref(false)
 
-    return {
-      visible,
-      show,
-      handleOk,
-      hide,
-    }
-  },
+const show = () => {
+  visible.value = true
 }
+const handleOk = () => {
+  console.log('confirm')
+  hide()
+}
+const hide = () => {
+  visible.value = false
+}
+
+defineExpose({
+  show,
+})
+</script>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+  name: 'Modal',
+})
 </script>
 
 <template>
-  <a-modal v-model:visible="visible" @ok="handleOk" @cancel="hide">
-    <template #title> Title </template>
+  <Modal v-model:visible="visible" @ok="handleOk" @cancel="hide">
+    <template #title> {{ title }} </template>
     <div>
-      You can customize modal body text by the current situation. This modal will be closed immediately once you press
-      the OK button.
+      <slot />
     </div>
-  </a-modal>
+  </Modal>
 </template>

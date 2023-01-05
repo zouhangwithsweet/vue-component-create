@@ -10,9 +10,10 @@ import {
   Component,
   ComponentPublicInstance,
   App,
+  VNodeChild,
 } from 'vue'
 
-export type SlotsData = (createVnode: typeof h) => Record<string, () => VNode>
+export type SlotsData = (createVnode: typeof h) => Record<string, () => VNodeChild>
 
 let seed = 0
 const instances: VNode[] = []
@@ -78,10 +79,7 @@ const createComponent = <P extends Record<string, any> = {}>(
     }
 
     // add $updateProps
-    $cre['$updateProps'] = function (
-      props: Record<string, VNode>,
-      slots: null | ((createVnode: typeof h) => Record<string, () => VNode>)
-    ) {
+    $cre['$updateProps'] = function (props: Record<string, VNode>, slots: null | SlotsData) {
       _options = { ..._options, ...props }
       _slots = slots ? { ...(_slots || {}), ...slots(h) } : null
       vm.component?.proxy?.$forceUpdate()

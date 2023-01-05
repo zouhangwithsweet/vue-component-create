@@ -5,7 +5,7 @@ import { IconUser } from '@arco-design/web-vue/es/icon'
 export default defineComponent({
   setup() {
     const isShow = ref(false)
-  
+
     return {
       isShow,
     }
@@ -14,19 +14,22 @@ export default defineComponent({
     show() {
       const spin = this.$createSpin({
         tip: 'Loading message...',
-        style: "position: fixed; top: 100px; left: 50%; transform: translateX(-50%);"
+        style: 'position: fixed; top: 100px; left: 50%; transform: translateX(-50%);',
       })
-      const avatar = this.$createAvatar({
-        style: "position: fixed; top: 50px; left: 50%; transform: translateX(-50%);"
-      }, (h) => ({
-        default: () => h(IconUser)
-      }))
+      const avatar = this.$createAvatar(
+        {
+          style: 'position: fixed; top: 50px; left: 50%; transform: translateX(-50%);',
+        },
+        (h) => ({
+          default: () => h(IconUser),
+        })
+      )
       const rate = this.$createRate({
-        style: "position: fixed; top: 180px; left: 50%; transform: translateX(-50%);",
+        style: 'position: fixed; top: 180px; left: 50%; transform: translateX(-50%);',
         defaultValue: 4,
-        readonly: true
+        readonly: true,
       })
-      
+
       setTimeout(() => {
         spin.$remove()
         avatar.$remove()
@@ -34,17 +37,21 @@ export default defineComponent({
       }, 3500)
     },
     showModal() {
-      const modal = this.$createModal()
+      const modal = this.$createModal({}, (h) => ({
+        default:
+          () => `You can customize modal body text by the current situation. This modal will be closed immediately once you press
+        the OK button.`,
+      }))
       modal.show()
-    }
-  }
+    },
+  },
 })
 </script>
 
 <template>
   <h2>Vue create Component</h2>
   <p>create component with API</p>
-  <p style="display: flex; gap: 16px; flex-direction: column; align-items: center;">
+  <p style="display: flex; gap: 16px; flex-direction: column; align-items: center">
     <button @click="show">show</button>
     <button @click="showModal">show Modal</button>
   </p>
@@ -55,7 +62,8 @@ h2 {
   color: #4fc08d;
 }
 
-h2, p {
+h2,
+p {
   font-family: Arial, Helvetica, sans-serif;
 }
 </style>
