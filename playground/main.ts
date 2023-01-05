@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, App as TApp, Component } from 'vue'
 import { Spin, Avatar, Rate } from '@arco-design/web-vue'
 import { createAPI } from '../src/index'
 
@@ -10,9 +10,12 @@ import './style.css'
 
 const app = createApp(App)
 
-createAPI(app, Loading, true)
-createAPI(app, Spin, true)
-createAPI(app, Avatar, true)
-createAPI(app, Rate, true)
+createComponents(app, [Loading, Spin, Avatar, Rate])
 
 app.mount('#app')
+
+function createComponents(app: TApp, comps: Component[], single = true) {
+  comps.forEach((c) => {
+    createAPI(app, c, single)
+  })
+}

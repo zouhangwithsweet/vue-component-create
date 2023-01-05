@@ -16,11 +16,11 @@ export type SlotsData = (createVnode: typeof h) => Record<string, () => VNode>
 let seed = 0
 const instances: VNode[] = []
 
-const createComponent = (
+const createComponent = <P extends Record<string, any> = {}>(
   componentCtor: Component & {
     _instance?: ComponentPublicInstance | null
   },
-  options: Record<string, any>,
+  options: P,
   slots: null | SlotsData = null,
   context: null | AppContext = null
 ) => {
@@ -113,14 +113,14 @@ export function createAPI(
 
   app.config.globalProperties[
     `$create${camelize(componentCtor.name).replace(/^\w/, ($) => $.toUpperCase())}`
-  ] = function (options: Record<string, any>, slots = null) {
+  ] = function <P extends Record<string, any> = {}>(options: P, slots = null) {
     if (single && componentCtor._instance) {
       if (options) {
         componentCtor._instance.$updateProps(options, slots)
       }
       return componentCtor._instance
     }
-    const vm = (componentCtor._instance = createComponent(
+    const vm = (componentCtor._instance = createComponent<P>(
       componentCtor,
       options,
       slots,
@@ -128,13 +128,12 @@ export function createAPI(
     ))
 
     const parentVnodeProps = this ? this._.vnode.props : null
-    if (parentVnodeProps) {
-      this._.vnode.props = mergeProps(parentVnodeProps || {}, {
-        onVnodeBeforeUnmount() {
-          vm.$remove()
-        },
-      })
-    }
+
+    this._.vnode.props = mergeProps(parentVnodeProps || {}, {
+      onVnodeBeforeUnmount() {
+        vm.$remove()
+      },
+    })
 
     return vm
   }
