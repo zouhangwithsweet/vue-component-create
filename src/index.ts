@@ -13,7 +13,11 @@ import {
   VNodeChild,
 } from 'vue'
 
-export type SlotsData = (createVnode: typeof h) => Record<string, () => VNodeChild>
+export type CreateSlotsData = (createVnode: typeof h) => Record<string, () => VNodeChild>
+export type CreateComponentProperties = {
+  $updateProps: (options?: Record<string, any>, slots?: null | CreateSlotsData) => void
+  $remove: () => void
+}
 
 let seed = 0
 const instances: VNode[] = []
@@ -23,7 +27,7 @@ const createComponent = <P extends Record<string, any> = {}>(
     _instance?: ComponentPublicInstance | null
   },
   options: P,
-  slots: null | SlotsData = null,
+  slots: null | CreateSlotsData = null,
   context: null | AppContext = null
 ) => {
   let _options = options
@@ -79,7 +83,7 @@ const createComponent = <P extends Record<string, any> = {}>(
     }
 
     // add $updateProps
-    $cre['$updateProps'] = function (props: Record<string, VNode>, slots: null | SlotsData) {
+    $cre['$updateProps'] = function (props: Record<string, VNode>, slots: null | CreateSlotsData) {
       _options = { ..._options, ...props }
       _slots = slots ? { ...(_slots || {}), ...slots(h) } : null
       vm.component?.proxy?.$forceUpdate()
@@ -88,16 +92,7 @@ const createComponent = <P extends Record<string, any> = {}>(
     document.body.appendChild(container)
   }
 
-  return $cre as ComponentPublicInstance<
-    {},
-    {},
-    {},
-    {},
-    {
-      $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
-      $remove: () => void
-    }
-  >
+  return $cre as ComponentPublicInstance<{}, {}, {}, {}, CreateComponentProperties>
 }
 
 function removeFromParent(this: any, vm: ReturnType<typeof createComponent>) {
@@ -117,16 +112,7 @@ function removeFromParent(this: any, vm: ReturnType<typeof createComponent>) {
 export function createAPI(
   app: App,
   componentCtor: Component & {
-    _instance?: ComponentPublicInstance<
-      {},
-      {},
-      {},
-      {},
-      {
-        $updateProps: (options?: Record<string, any>, slots?: null | SlotsData) => void
-        $remove: () => void
-      }
-    > | null
+    _instance?: ComponentPublicInstance<{}, {}, {}, {}, CreateComponentProperties> | null
   },
   single?: boolean
 ) {
