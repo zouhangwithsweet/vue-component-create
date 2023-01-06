@@ -140,7 +140,9 @@ export function createAPI(
         if (options) {
           componentCtor._instance.$updateProps(options, slots)
         }
+
         removeFromParent.call(this, componentCtor._instance)
+
         return componentCtor._instance
       }
       const vm = (componentCtor._instance = createComponent<P>(
@@ -149,6 +151,7 @@ export function createAPI(
         slots,
         this ? this._.appContext : null
       ))
+
       removeFromParent.call(this, vm)
 
       return vm
