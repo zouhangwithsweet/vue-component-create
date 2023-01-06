@@ -18,6 +18,10 @@ export type CreateComponentProperties = {
   $updateProps: (options?: Record<string, any>, slots?: null | CreateSlotsData) => void
   $remove: () => void
 }
+export type CreateFunction = <P extends Record<string, any> = {}, M extends Record<string, any> = {}>(
+  options: P,
+  slots: CreateSlotsData
+) => ComponentPublicInstance<P, {}, {}, {}, CreateComponentProperties & M>
 
 let seed = 0
 const instances: VNode[] = []

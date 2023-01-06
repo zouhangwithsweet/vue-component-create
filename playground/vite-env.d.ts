@@ -17,7 +17,7 @@ declare module 'vue' {
     $createSpin: (options?: Record<string, any>, slots?: null | SlotsData) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler>
     $createAvatar: (options?: Record<string, any>, slots?: null | SlotsData) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler>
     $createRate: (options?: Record<string, any>, slots?: null | SlotsData) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler>
-    $createModal: (options?: Record<string, any>, slots?: null | SlotsData) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler & {
+    $createModal: <P = {}>(options?: P, slots?: null | SlotsData) => ComponentPublicInstance<{}, {}, {}, {}, CreateHandler & {
       show: () => void
       hide: () => void
     }>

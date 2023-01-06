@@ -3,6 +3,8 @@ import { defineComponent, ref } from 'vue'
 import { IconUser } from '@arco-design/web-vue/es/icon'
 import NestVue from './Nest.vue'
 
+import type { ModalConfig } from '@arco-design/web-vue'
+
 export default defineComponent({
   components: {
     NestVue,
@@ -41,7 +43,7 @@ export default defineComponent({
       }, 3500)
     },
     showModal() {
-      const modal = this.$createModal({}, (h) => ({
+      const modal = this.$createModal<Omit<ModalConfig, 'content'>>({}, (h) => ({
         default:
           () => `You can customize modal body text by the current situation. This modal will be closed immediately once you press
         the OK button.`,
