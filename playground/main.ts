@@ -11,7 +11,7 @@ import './style.css'
 
 const app = createApp(App)
 
-createComponents(app, [Loading, Spin, Avatar, Rate, Modal])
+createComponents(app, [Spin, Avatar, Rate, Modal])
 
 app.mount('#app')
 

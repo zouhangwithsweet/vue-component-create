@@ -100,6 +100,20 @@ const createComponent = <P extends Record<string, any> = {}>(
   >
 }
 
+function removeFromParent(this: any, vm: ReturnType<typeof createComponent>) {
+  const hasParent = !!this && !!this._ && isVNode(this._.vnode)
+
+  if (hasParent) {
+    const parentVnodeProps = this && this._ && isVNode(this._.vnode) ? this._.vnode.props : null
+
+    this._.vnode.props = mergeProps(parentVnodeProps || {}, {
+      onVnodeBeforeUnmount() {
+        vm.$remove()
+      },
+    })
+  }
+}
+
 export function createAPI(
   app: App,
   componentCtor: Component & {
@@ -126,6 +140,7 @@ export function createAPI(
         if (options) {
           componentCtor._instance.$updateProps(options, slots)
         }
+        removeFromParent.call(this, componentCtor._instance)
         return componentCtor._instance
       }
       const vm = (componentCtor._instance = createComponent<P>(
@@ -134,18 +149,7 @@ export function createAPI(
         slots,
         this ? this._.appContext : null
       ))
-
-      const hasParent = !!this && !!this._ && isVNode(this._.vnode)
-
-      if (hasParent) {
-        const parentVnodeProps = this && this._ && isVNode(this._.vnode) ? this._.vnode.props : null
-
-        this._.vnode.props = mergeProps(parentVnodeProps || {}, {
-          onVnodeBeforeUnmount() {
-            vm.$remove()
-          },
-        })
-      }
+      removeFromParent.call(this, vm)
 
       return vm
     }

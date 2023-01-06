@@ -1,8 +1,12 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { IconUser } from '@arco-design/web-vue/es/icon'
+import NestVue from './Nest.vue'
 
 export default defineComponent({
+  components: {
+    NestVue,
+  },
   setup() {
     const isShow = ref(false)
 
@@ -54,6 +58,8 @@ export default defineComponent({
   <p style="display: flex; gap: 16px; flex-direction: column; align-items: center">
     <button @click="show">show</button>
     <button @click="showModal">show Modal</button>
+    <button @click="isShow = !isShow">{{ isShow ? 'hide' : 'show' }} nest</button>
+    <NestVue v-if="isShow" />
   </p>
 </template>
 

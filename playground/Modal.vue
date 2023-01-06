@@ -37,7 +37,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Modal v-model:visible="visible" @ok="handleOk" @cancel="hide">
+  <Modal v-model:visible="visible" @ok="handleOk" @cancel="hide" :align-center="false">
     <template #title> {{ title }} </template>
     <div>
       <slot />
