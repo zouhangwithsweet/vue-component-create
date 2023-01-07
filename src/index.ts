@@ -20,7 +20,7 @@ export type CreateComponentProperties = {
 }
 export type CreateFunction = <P extends Record<string, any> = {}, M extends Record<string, any> = {}>(
   options: P,
-  slots: CreateSlotsData
+  slots?: null | CreateSlotsData
 ) => ComponentPublicInstance<P, {}, {}, {}, CreateComponentProperties & M>
 
 let seed = 0
@@ -117,6 +117,7 @@ export function createAPI(
   app: App,
   componentCtor: Component & {
     _instance?: ComponentPublicInstance<{}, {}, {}, {}, CreateComponentProperties> | null
+    $create?: CreateFunction
   },
   single?: boolean
 ) {
@@ -124,26 +125,29 @@ export function createAPI(
     throw Error('The Component must have a name.')
   }
 
-  app.config.globalProperties[`$create${camelize(componentCtor.name).replace(/^\w/, ($) => $.toUpperCase())}`] =
-    function <P extends Record<string, any> = {}>(options: P, slots = null) {
-      if (single && componentCtor._instance) {
-        if (options) {
-          componentCtor._instance.$updateProps(options, slots)
-        }
-
-        removeFromParent.call(this, componentCtor._instance)
-
-        return componentCtor._instance
+  function initComponent<P extends Record<string, any> = {}>(this: any, options: P, slots = null) {
+    if (single && componentCtor._instance) {
+      if (options) {
+        componentCtor._instance.$updateProps(options, slots)
       }
-      const vm = (componentCtor._instance = createComponent<P>(
-        componentCtor,
-        options,
-        slots,
-        this ? this._.appContext : null
-      ))
 
-      removeFromParent.call(this, vm)
+      removeFromParent.call(this, componentCtor._instance)
 
-      return vm
+      return componentCtor._instance
     }
+    const vm = (componentCtor._instance = createComponent<P>(
+      componentCtor,
+      options,
+      slots,
+      this ? this?._?.appContext : null
+    ))
+
+    removeFromParent.call(this, vm)
+
+    return vm
+  }
+
+  componentCtor.$create = app.config.globalProperties[
+    `$create${camelize(componentCtor.name).replace(/^\w/, ($) => $.toUpperCase())}`
+  ] = initComponent as unknown as CreateFunction
 }

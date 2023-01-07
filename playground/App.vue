@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { Rate } from '@arco-design/web-vue'
 import { IconUser } from '@arco-design/web-vue/es/icon'
 import NestVue from './Nest.vue'
 
@@ -30,11 +31,11 @@ export default defineComponent({
           default: () => h(IconUser),
         })
       )
-      const rate = this.$createRate({
+      const rate = Rate.$create({
         style: 'position: fixed; top: 180px; left: 50%; transform: translateX(-50%);',
         defaultValue: 4,
         readonly: true,
-      })
+      }, null)
 
       setTimeout(() => {
         rate.$updateProps({
