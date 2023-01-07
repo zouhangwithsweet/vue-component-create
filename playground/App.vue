@@ -37,6 +37,18 @@ export default defineComponent({
       })
 
       setTimeout(() => {
+        rate.$updateProps({
+          modelValue: 3,
+        })
+        spin.$updateProps({
+          tip: '$updateProps check'
+        })
+        avatar.$updateProps({}, (h) => ({
+          default: () => 'B'
+        }))
+      }, 1500)
+
+      setTimeout(() => {
         spin.$remove()
         avatar.$remove()
         rate.$remove()
