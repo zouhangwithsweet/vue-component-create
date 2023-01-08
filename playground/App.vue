@@ -31,7 +31,9 @@ export default defineComponent({
           default: () => h(IconUser),
         })
       )
-      const rate = Rate.$create({
+
+      // bind appContext with this, this is not necessary
+      const rate = Rate.$create.call(this, {
         style: 'position: fixed; top: 180px; left: 50%; transform: translateX(-50%);',
         defaultValue: 4,
         readonly: true,
