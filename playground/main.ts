@@ -6,6 +6,7 @@ import App from './App.vue'
 import Loading from './Loading.vue'
 import Modal from './Modal.vue'
 
+import 'uno.css'
 import '@arco-design/web-vue/dist/arco.css'
 import './style.css'
 

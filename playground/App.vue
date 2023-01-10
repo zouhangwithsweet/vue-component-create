@@ -12,9 +12,11 @@ export default defineComponent({
   },
   setup() {
     const isShow = ref(false)
+    const year = new Date().getFullYear()
 
     return {
       isShow,
+      year,
     }
   },
   methods: {
@@ -25,7 +27,7 @@ export default defineComponent({
       })
       const avatar = this.$createAvatar(
         {
-          style: 'position: fixed; top: 50px; left: 50%; transform: translateX(-50%);',
+          class: '!fixed top-50px left-1/2 -translate-x-1/2',
         },
         (h) => ({
           default: () => h(IconUser),
@@ -33,21 +35,25 @@ export default defineComponent({
       )
 
       // bind appContext with this, this is not necessary
-      const rate = Rate.$create.call(this, {
-        style: 'position: fixed; top: 180px; left: 50%; transform: translateX(-50%);',
-        defaultValue: 4,
-        readonly: true,
-      }, null)
+      const rate = Rate.$create.call(
+        this,
+        {
+          class: 'fixed top-180px left-1/2 -translate-x-1/2',
+          defaultValue: 4,
+          readonly: true,
+        },
+        null
+      )
 
       setTimeout(() => {
         rate.$updateProps({
           modelValue: 3,
         })
         spin.$updateProps({
-          tip: '$updateProps check'
+          tip: '$updateProps check',
         })
         avatar.$updateProps({}, (h) => ({
-          default: () => 'B'
+          default: () => 'B',
         }))
       }, 1500)
 
@@ -70,19 +76,31 @@ export default defineComponent({
 </script>
 
 <template>
-  <h2>Vue create Component</h2>
-  <p>create component with API</p>
-  <p style="display: flex; gap: 16px; flex-direction: column; align-items: center">
-    <button @click="show">show</button>
-    <button @click="showModal">show Modal</button>
-    <button @click="isShow = !isShow">{{ isShow ? 'hide' : 'show' }} nest</button>
-    <NestVue v-if="isShow" />
-  </p>
+  <div class="max-w-7xl min-w-screen min-h-screen lg:px-10 lt-lg:px-8">
+    <div class="lg:px-5 lg:pt-6">
+      <h2><span>Vue create Component</span></h2>
+      <p class="text-sm">create component with API</p>
+      <p class="flex gap-4 flex-col items-start">
+        <button class="animate-shake-x" @click="show">show</button>
+        <button @click="showModal">show Modal</button>
+        <button @click="isShow = !isShow">{{ isShow ? 'hide' : 'show' }} nest</button>
+        <NestVue v-if="isShow" />
+      </p>
+    </div>
+  </div>
+  <div class="fixed bottom-8 left-1/2 -translate-x-1/2 text-gray-400">
+    Create by zz @{{year}}
+  </div>
 </template>
 
 <style scoped>
-h2 {
-  color: #4fc08d;
+span {
+  font-size: 24px;
+  font-weight: bold;
+  background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 h2,
