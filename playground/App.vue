@@ -3,12 +3,16 @@ import { defineComponent, ref } from 'vue'
 import { Rate } from '@arco-design/web-vue'
 import { IconUser } from '@arco-design/web-vue/es/icon'
 import NestVue from './Nest.vue'
+import ShowMd from './codes/show.md'
+import ModalMd from './codes/modalshow.md'
 
 import type { ModalConfig } from '@arco-design/web-vue'
 
 export default defineComponent({
   components: {
     NestVue,
+    ShowMd,
+    ModalMd,
   },
   setup() {
     const isShow = ref(false)
@@ -80,9 +84,11 @@ export default defineComponent({
     <div class="lg:px-5 lg:pt-6">
       <h2><span>Vue create Component</span></h2>
       <p class="text-sm">create component with API</p>
-      <p class="flex gap-4 flex-col items-start">
+      <p class="flex gap-3 flex-col items-start">
         <button class="animate-shake-x" @click="show">show</button>
+        <Show-Md />
         <button @click="showModal">show Modal</button>
+        <ModalMd />
         <button @click="isShow = !isShow">{{ isShow ? 'hide' : 'show' }} nest</button>
         <NestVue v-if="isShow" />
       </p>
